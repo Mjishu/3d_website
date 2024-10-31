@@ -16,6 +16,7 @@ const near = 0.1;
 const far = 100;
 const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 camera.position.set(15, 15, -9.5);
+// camera.position.set(15, 2, 0)
 camera.lookAt(0, 0, 0);
 
 const renderer = new THREE.WebGLRenderer();
@@ -31,7 +32,7 @@ const floorGeo = new THREE.BoxGeometry(100, 0.2, 100);
 const floorMat = new THREE.MeshStandardMaterial({ color: 0x00ccff });
 const floorMesh = new THREE.Mesh(floorGeo, floorMat);
 floorMesh.receiveShadow = true;
-floorMesh.position.y = -0.6;
+floorMesh.position.y = -0.8;
 scene.add(floorMesh);
 
 //Platforms
@@ -61,13 +62,15 @@ scene.add(directionalLight);
 const hemisphereLight = new THREE.HemisphereLight(0x87CEEB, 0xFFFFFF, 0.6);
 scene.add(hemisphereLight);
 
+window.addEventListener("keydown", (e) => {
+  player.move(e);
+});
 
 function animate() {
   requestAnimationFrame(animate);
-  renderer.render(scene, camera);
   player.jumpingUpdate();
+  renderer.render(scene, camera);
 }
-
 
 animate()
 
